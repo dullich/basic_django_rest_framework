@@ -33,8 +33,8 @@ class Timestamped(models.Model):
 
     class Meta:
         abstract=True
-        get_latest_by('created_on')
-        ordering('-created_on', '-modified_on')
+        get_latest_by = 'created_on'
+        ordering = ['-created_on', '-modified_on']
 
 class Country(models.Model):
     uuid=models.UUIDField(primary_key=True, default=uuid4, editable=False)
@@ -87,7 +87,7 @@ class Owner(Timestamped, models.Model):
     address=models.CharField(max_length=100)
     photo=models.URLField(blank=True, null=True)
     birthday=models.DateField()
-    user=models.ForeignKey(
+    user=models.OneToOneField(
         User,
         on_delete=RESTRICT,
         related_name="owner",
